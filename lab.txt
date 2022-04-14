@@ -48,8 +48,13 @@ echo "Geography: Average Admission Rate" >> $2
 while read line1;do                                                                                                                                            
 	sum=0                                                                                                                                                  
 	count=0                                                                                                                                                
-	while read line2; do                                                                                                                                           			IFS=','                                                                                                                                                
-		read -a fields <<< "$line2"                                                                                                                            			if [ ${fields[5]} = $line1 ]; then                                                                                                                             			sum=$(bc -l <<< "${sum}+${fields[6]}")                                                                                                                 			count=$(( $count + 1 ))                                                                                                                        			fi                                                                                                                                             
+	while read line2; do                                                                                                                                    
+		IFS=','                                                                                                                                           
+		read -a fields <<< "$line2"                                                                                                                          
+		if [ ${fields[5]} = $line1 ]; then                                                                                                                
+			sum=$(bc -l <<< "${sum}+${fields[6]}")                                                                                                  
+			count=$(( $count + 1 ))                                                                                                                     
+		fi                                                                                                                                             
 	done < $1                                                                                                                                              
 	avg=$(bc -l <<< "scale=4; ${sum}/${count}")                                                                                                            
 	#echo $avg                                                                                                                                             
@@ -60,7 +65,8 @@ rm geo2.txt
 #TASK6                                                                                                                                 
 echo >> $2                                                                                                                                             
 echo "Top 5 Colleges with maximum Median Earnings: " >> $2                                                                                             
-echo "Name: MedianEarnigs" >> $2                                                                                                                                        touch MedEarn.txt                                                                                                                                      
+echo "Name: MedianEarnigs" >> $2
+touch MedEarn.txt                                                                                                                                      
 awk -F "," '{print $NF","$1}' $1 | sort -nr | head -5 > MedEarn.txt                                                                                    
 awk -F "," '{print $NF": "$1}' MedEarn.txt >> $2                                                                                                       
 rm MedEarn.txt                                                                                                                                                                                                                                                                                                
