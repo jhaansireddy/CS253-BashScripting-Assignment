@@ -34,8 +34,10 @@ echo "Name of the colleges whose Highest Degree is Bachelor’s are: " >> $2
 while read line; do                                                                                                                                            
 	IFS=','                                                                                                                                                
 	read -a fields <<< "$line"                                                                                                                             
-	if [ ${fields[2]} = "Bachelor's" ]; then                                                                                                                       			echo ${fields[0]} >> $2 
-        fi                                                                                                                                                             		echo ${fields[5]} >> geo1.txt                                                                                                          
+	if [ ${fields[2]} = "Bachelor's" ]; then                                                                                                                   
+		echo ${fields[0]} >> $2 
+        fi                                                                                                                                                         
+	echo ${fields[5]} >> geo1.txt                                                                                                          
 done < $1  
 
 #TASK5                                                                                                                                   
